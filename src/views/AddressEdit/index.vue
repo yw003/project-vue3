@@ -3,12 +3,7 @@
     <Header :title="address" />
     <van-address-edit
       :area-list="areaList"
-      :address-info="{
-        name: '11',
-        tel: '111',
-        addressDetail: '11',
-        areaCode:'110201'
-      }"
+      :address-info="addressInfo"
       show-delete
       show-set-default
       show-search-result
@@ -23,7 +18,8 @@
 import Header from "@/components/Header.vue";
 import { reactive, toRefs, onMounted, computed } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { Toast } from "vant";
 export default {
   components: {
     Header,
@@ -53,11 +49,27 @@ export default {
     });
     const store = useStore();
     const route = useRoute();
-    //保存地址
+    const router = useRouter();
+    //地址
     const onSave = (content) => {
-      console.log(content);
+      // 新增和编辑地址
+      if (route.query.type === "add") {
+        store.commit("addAddress", content);
+      } else {
+        store.commit("editAddress", content);
+      }
+      Toast("保存成功");
+      setTimeout(() => {
+        router.back();
+      }, 1000);
     };
-    const onDelete = () => {};
+    const onDelete = () => {
+      store.commit("deleteAddress", content);
+      Toast("删除成功");
+      setTimeout(() => {
+        router.back();
+      }, 1000);
+    };
     const init = () => {
       store.state.userAddress.forEach((item) => {
         if (item.id === Number(route.query.id)) {

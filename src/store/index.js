@@ -87,6 +87,32 @@ export default createStore({
     // 多个订单拼接
     orderListF(state, val) {
       state.orderListFin = state.orderListFin.concat(state.orderList)
+    },
+    //新增地址
+    addAddress(state, value) {
+      state.userAddress.map((item) => {
+        if (value.isDefault) {
+          item.isDefault = false
+        }
+      })
+      state.userAddress.push(value)
+    },
+    //编辑地址
+    editAddress(state, val) {
+      state.userAddress = state.userAddress.map(item => {
+        if (val.isDefault) {
+          item.isDefault = false
+        }
+        return item.id === val.id ? val : item
+      })
+    },
+    deleteAddress(state, value) {
+      state.userAddress = state.userAddress.filter((item) => {
+        return !(item.id === value.id)
+      })
+      if (value.isDefault) {
+        state.userAddress[0].isDefault = true
+      }
     }
   },
   actions: {},
