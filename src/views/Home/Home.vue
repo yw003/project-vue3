@@ -18,7 +18,7 @@
           </div>
           <div class="sort">
             <div class="big-sort">
-              <div v-for="(item,index) in big_sort" :key="index">
+              <div v-for="(item, index) in big_sort" :key="index">
                 <svg class="icon" aria-hidden="true">
                   <use :xlink:href="`#${item.icon}`" />
                 </svg>
@@ -26,7 +26,7 @@
               </div>
             </div>
             <div class="small-sort">
-              <div v-for="(item,index) in small_sort" :key="index">
+              <div v-for="(item, index) in small_sort" :key="index">
                 <svg class="icon" aria-hidden="true">
                   <use :xlink:href="`#${item.icon}`" />
                 </svg>
@@ -36,7 +36,11 @@
           </div>
         </div>
         <van-tabs v-model:active="active" class="van-tabs">
-          <van-tab v-for="(item,index) in centent_nav_list" :key="index" :title="item.tab">
+          <van-tab
+            v-for="(item, index) in content_nav_list"
+            :key="index"
+            :title="item.tab"
+          >
             <NaveList :navList="item.data" />
           </van-tab>
         </van-tabs>
@@ -46,24 +50,48 @@
 </template>
 
 <script>
-
-import { reactive, toRefs, ref } from 'vue';
-import sortData from '../../mock/sort.js'
-import NaveList from './components/NavList.vue'
+import { reactive, toRefs, ref, onMounted } from "vue";
+import sortData from "../../mock/sort.js";
+import NaveList from "./components/NavList.vue";
+import axios from "axios";
+import { getApiHomeData } from "@/api/api";
 export default {
   components: {
-    NaveList
+    NaveList,
   },
   setup() {
-    let data = reactive(sortData)
-    const active = ref(0)
+    let data1 = reactive({
+      big_sort: [],
+      small_sort: [],
+      content_nav_list: [],
+    });
+    const active = ref(0);
+    const getHomeData = () => {
+      getApiHomeData().then((res) => {
+        console.log(res);
+        data1.big_sort = res.big_sort;
+        data1.small_sort = res.small_sort;
+        data1.content_nav_list = res.content_nav_list;
+      });
+      /*  axios.get("/home/data").then((res) => {
+        console.log(res);
+        const { code, data } = res.data;
+        if (code == 200) {
+          data1.big_sort = data.big_sort;
+          data1.small_sort = data.small_sort;
+          data1.content_nav_list = data.content_nav_list;
+        }
+      }); */
+    };
+    onMounted(() => {
+      getHomeData();
+    });
     return {
-      ...toRefs(data),
-      active
-    }
-  }
-}
-
+      ...toRefs(data1),
+      active,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
