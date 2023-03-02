@@ -3,7 +3,12 @@
     <Header :title="address" />
     <van-address-edit
       :area-list="areaList"
-      :address-info="addressInfo"
+      :address-info="{
+        name: '11',
+        tel: '111',
+        addressDetail: '11',
+        areaCode:'110201'
+      }"
       show-delete
       show-set-default
       show-search-result
@@ -44,17 +49,7 @@ export default {
           130102: "下城区",
         },
       },
-      addressInfo: {
-        // addressDetail: "深圳湾",
-        // areaCode: "110101",
-        // city: "深圳市",
-        // county: "南山区",
-        // id: 1001,
-        // isDefault: true,
-        // name: "jason",
-        // province: "广东省",
-        // tel: "15874859686",
-      },
+      addressInfo: {},
     });
     const store = useStore();
     const route = useRoute();
@@ -67,8 +62,9 @@ export default {
       store.state.userAddress.forEach((item) => {
         if (item.id === Number(route.query.id)) {
           data.addressInfo = item;
+          console.log(item);
         }
-        console.log(data.addressInfo);
+        // console.log(data.addressInfo);
       });
     };
     //

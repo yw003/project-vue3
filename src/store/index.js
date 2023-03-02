@@ -18,18 +18,18 @@ export default createStore({
         county: '南山区',
         addressDetail: '深圳湾',
         isDefault: true,
-        areaCode: '110101',
+        areaCode: '110201',
       },
       {
         id: 1002,
         name: 'allen',
         tel: '15874859685',
-        province: '湖北省',
-        city: '武汉市',
-        county: '武昌区',
-        addressDetail: '黄鹤楼',
+        province: '浙江省',
+        city: '杭州市',
+        county: '上城区',
+        addressDetail: 'dsada',
         isDefault: false,
-        areaCode: '110101',
+        areaCode: '120102',
       },
     ], //收件人地址
     orderListFin: []
@@ -92,6 +92,6 @@ export default createStore({
   actions: {},
   modules: {},
   plugins: [
-    createPersistedstate()
+    // createPersistedstate()
   ]
 });

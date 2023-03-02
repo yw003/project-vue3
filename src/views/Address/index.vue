@@ -2,6 +2,7 @@
   <div>
     <Header title="地址管理" />
     <van-address-list
+      v-model="chosenAddressId"
       :list="list"
       default-tag-text="默认"
       @add="onAdd"
@@ -19,7 +20,6 @@ export default {
   components: {
     Header,
   },
-
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -43,6 +43,7 @@ export default {
     };
     let data = reactive({
       list: [],
+      chosenAddressId:1001 
     });
     const init = () => {
       data.list = store.state.userAddress.map((item) => {
