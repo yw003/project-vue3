@@ -63,7 +63,7 @@ export default {
         router.back();
       }, 1000);
     };
-    const onDelete = () => {
+    const onDelete = (content) => {
       store.commit("deleteAddress", content);
       Toast("删除成功");
       setTimeout(() => {
