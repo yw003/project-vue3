@@ -24,7 +24,7 @@ export default {
     let store = useStore();
     const value = ref(0);
     const changeNum = (a) => {
-      store.commit("addCart", JSON.parse(JSON.stringify(a)));
+      store.commit("ADDCART", JSON.parse(JSON.stringify(a)));
     };
     return { value, changeNum };
   },
